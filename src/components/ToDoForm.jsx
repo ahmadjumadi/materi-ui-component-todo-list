@@ -1,46 +1,44 @@
 import React, {useState} from 'react';
+import { Box, Button, TextField, Typography } from '@mui/material';
 
-const ToDoForm = ({propsSubmitHandler }) => {
+const ToDoForm = (props) => {
 
-  const [inputTodo, setInputTodo] = useState("");
+  const [inputData, setInputData] = useState("");
 
-  const todoInputOnChangeHandler = (event) => {
-    setInputTodo(event.target.value)
+  const inputOnChangeHandler = (event) => {
+    setInputData(event.target.value);
   };
 
-  const formSubmitHandler = (event) => {
+  const formOnSubmitHandler = (event) => {
     event.preventDefault();
-    propsSubmitHandler(inputTodo);
+    props.fnAddTodos(inputData);
     //kosongan input todo input setelah do klik
-    setInputTodo("");
+    setInputData("");
   };
 
   return (
-    <form action='' onSubmit={formSubmitHandler}>
-      <div style={
-        {
-          marginBottom : '0.5em',
-        }
-      }>
-        <label htmlFor="todo-input" style={
-          {
-            marginRight : '0.5em',
-          }
-        }>Input Kerjaan Baru :</label>
+    <Box sx={{ p:2, border: '1px dashed grey'}}>
+      <Typography variant='h5'>Component ToDo Form</Typography>
+      <form
+        style=
+        {{
+          margin: '0.5em 0em',
+          display: 'flex'
+        }}
+        onSubmit={formOnSubmitHandler}>
         { /* berarti untuk input hartus memiliki statu state untuk menampung value dari input */}
-        <input 
-              type="text" 
-              name="todo-input" 
-              id="todo-input" 
-              className='todo-input' 
-              value={inputTodo} 
-              onChange={todoInputOnChangeHandler} 
+        <TextField 
+          type="text" 
+          style={{ marginRight: '0.5em' }}
+          value={inputData}  
+          onChange={inputOnChangeHandler} 
+          label="Input ToDo Baru"
+          size='small'
+          variant='filled'
         />
-      </div>
-      <div>
-        <button type="submit">Tambah Todo</button>
-      </div>
+        <Button type="submit" variant='contained' size='large'>Tambah Todo</Button>
     </form>
+    </Box>
   );
 };
 
